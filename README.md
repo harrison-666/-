@@ -1,6 +1,6 @@
-#
-    - 该仓库用于为web前端开发提供技术支持。
-    - 包含内容： <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+
+    该仓库用于为web前端开发提供技术支持。
+    包含内容： <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
         HTML/HTML5 <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
         CSS/CSS3 <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
         Javascript <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
