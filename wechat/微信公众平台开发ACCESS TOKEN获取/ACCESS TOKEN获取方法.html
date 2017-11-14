@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)https://www.cnblogs.com/txw1958/p/weixin-access-token.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script async="" src="js/stat.php"></script><script async="" src="js/analytics.js"></script><script type="text/javascript" src="js/encoder.js"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>微信公众平台开发ACCESS TOKEN获取</title>
+<link type="text/css" rel="stylesheet" href="css/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="css/bundle-SimpleBlue.css">
+<link type="text/css" rel="stylesheet" href="css/99079.css">
+<link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="css/bundle-SimpleBlue-mobile.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/txw1958/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/txw1958/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/txw1958/wlwmanifest.xml">
+<script src="js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">var currentBlogApp = 'txw1958', cb_enable_mathjax=false;var isLogined=false;</script>
+<script src="js/blog-common.js" type="text/javascript"></script>
+<script src="js/share.js"></script></head>
+<body>
+<a name="top"></a>
+<div id="page_begin_html"><div style="display:none">
+<div style="display: none" id="__document_write_ajax_div-1"></div>
+</div></div><script>load_page_begin_html();</script>
+
+<div id="home" style="width: 1000px;margin:0 auto;">
+<div id="main">
+	<div class="forFlow">
+
+<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/txw1958/p/weixin-access-token.html">&nbsp;本文介绍微信公众平台下Access Token的概念及获取方法</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body">
+<div class="content_hd">
+<h2 id="firstHeading">一、Access Token</h2>
+</div>
+<div id="bodyContent" class="bodyContent">
+<p>access_token是公众号的全局唯一票据，公众号调用各接口时都需使用access_token。正常情况下<strong>access_token有效期为7200秒</strong>，重复获取将导致上次获取的access_token失效。</p>
+<p>公众号可以使用AppID和AppSecret调用本接口来获取access_token。AppID和AppSecret可在开发模式中获得（需要已经成为开发者，且帐号没有异常状态）。<strong>注意调用所有微信接口时均需使用https协议。</strong></p>
+<p><strong>接口调用请求说明</strong></p>
+<pre>http请求方式: GET
+https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&amp;appid=APPID&amp;secret=APPSECRET
+</pre>
+<p><strong>参数说明</strong></p>
+<table style="width: 640px;" border="1" cellspacing="0" cellpadding="4" align="center">
+<tbody>
+<tr><th>参数</th><th>是否必须</th><th>说明</th></tr>
+<tr>
+<td>grant_type</td>
+<td>是</td>
+<td>获取access_token填写client_credential</td>
+</tr>
+<tr>
+<td>appid</td>
+<td>是</td>
+<td>第三方用户唯一凭证</td>
+</tr>
+<tr>
+<td>secret</td>
+<td>是</td>
+<td>第三方用户唯一凭证密钥，既appsecret</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回说明</strong></p>
+<p>正常情况下，微信会返回下述JSON数据包给公众号：</p>
+<pre>{"access_token":"ACCESS_TOKEN","expires_in":7200}
+</pre>
+<table style="width: 640px;" border="1" cellspacing="0" cellpadding="4" align="center">
+<tbody>
+<tr><th>参数</th><th>说明</th></tr>
+<tr>
+<td>access_token</td>
+<td>获取到的凭证</td>
+</tr>
+<tr>
+<td>expires_in</td>
+<td>凭证有效时间，单位：秒</td>
+</tr>
+</tbody>
+</table>
+<p>错误时微信会返回错误码等信息，JSON数据包示例如下（该示例为AppID无效错误）:</p>
+<pre>{"errcode":40013,"errmsg":"invalid appid"}</pre>
+</div>
+<p>&nbsp;</p>
+<h1>二、AppId和AppSecret</h1>
+<p><span>在微信后台使用找到高级功能-开发模式</span></p>
+<p><span><img src="img/021949547981700.jpg" alt=""></span></p>
+<p>&nbsp;</p>
+<p><span>成为开发者之后，就可以看到appid和appsecert了</span></p>
+<p><span><img src="img/021950235484149.jpg" alt=""></span></p>
+<p>&nbsp;</p>
+<p>如果没有url和Token ,&nbsp;你可以先用方倍工作室的下面的测试通过</p>
+<p><em>URL: 　　</em><span style="color: #0000ff;"><strong>http://discuz.comli.com/test.php</strong></span><br><em>Token: 　</em><span style="color: #0000ff;"><strong>weixin</strong></span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h1><span>三、获取Access Token</span></h1>
+<p><span>程序实现如下</span></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="img/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #800080;">$appid</span> = ""<span style="color: #000000;">;
+</span><span style="color: #800080;">$appsecret</span> = ""<span style="color: #000000;">;
+</span><span style="color: #800080;">$url</span> = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&amp;appid=<span style="color: #800080;">$appid</span>&amp;secret=<span style="color: #800080;">$appsecret</span>"<span style="color: #000000;">;
+
+</span><span style="color: #800080;">$ch</span> =<span style="color: #000000;"> curl_init();
+curl_setopt(</span><span style="color: #800080;">$ch</span>, CURLOPT_URL, <span style="color: #800080;">$url</span><span style="color: #000000;">);
+curl_setopt(</span><span style="color: #800080;">$ch</span>, CURLOPT_SSL_VERIFYPEER, <span style="color: #0000ff;">FALSE</span><span style="color: #000000;">);
+curl_setopt(</span><span style="color: #800080;">$ch</span>, CURLOPT_SSL_VERIFYHOST, <span style="color: #0000ff;">FALSE</span><span style="color: #000000;">);
+curl_setopt(</span><span style="color: #800080;">$ch</span>, CURLOPT_RETURNTRANSFER, 1<span style="color: #000000;">);
+</span><span style="color: #800080;">$output</span> = curl_exec(<span style="color: #800080;">$ch</span><span style="color: #000000;">);
+curl_close(</span><span style="color: #800080;">$ch</span><span style="color: #000000;">);
+</span><span style="color: #800080;">$jsoninfo</span> = json_decode(<span style="color: #800080;">$output</span>, <span style="color: #0000ff;">true</span><span style="color: #000000;">);
+</span><span style="color: #800080;">$access_token</span> = <span style="color: #800080;">$jsoninfo</span>["access_token"];</pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="img/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>你也可以直接在浏览器地址栏中，拼接出地址，执行后，获得如下数据</p>
+<div class="cnblogs_code">
+<pre>{"access_token":"N2L7KXa084WvelONYjkJ_traBMCCvy_UKmpUUzlrQ0EA2yNp3Iz6eSUrRG0bhaR_viswd50vDuPkY5nG43d1gbm-olT2KRMxOsVE08RfeD9lvK9lMguNG9kpIkKGZEjIf8Jv2m9fFhf8bnNa-yQH3g","expires_in":7200}</pre>
+</div>
+<p>参数说明如下</p>
+<div align="center">
+<table border="0" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="124">
+<p align="center"><strong>参数</strong></p>
+</td>
+<td width="283">
+<p align="center"><strong>说明</strong></p>
+</td>
+</tr>
+<tr>
+<td width="124">
+<p align="left">access_token</p>
+</td>
+<td width="283">
+<p align="left">获取到的凭证</p>
+</td>
+</tr>
+<tr>
+<td width="124">
+<p align="left">expires_in</p>
+</td>
+<td width="283">
+<p align="left">凭证有效时间，单位：秒</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>或者使用官方的接口调试工具，地址为：</p>
+<p><a class="external text" href="https://mp.weixin.qq.com/debug/cgi-bin/apiinfo?t=index&amp;type=%E5%9F%BA%E7%A1%80%E6%94%AF%E6%8C%81&amp;form=%E8%8E%B7%E5%8F%96access_token%E6%8E%A5%E5%8F%A3%20/token" rel="nofollow" target="_blank">使用网页调试工具调试自定义菜单接口</a>&nbsp;</p>
+<p><img src="img/021958490958196.jpg" alt=""></p>
+<p><span>点击检查问题得，得到<span><br></span></span></p>
+<p><span><img src="img/021959502832457.jpg" alt=""></span></p>
+<p><span>这样也获得了access token</span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div class="content_hd">
+<h2 id="firstHeading">附：全局返回码说明</h2>
+
+
+</div>
+<div id="bodyContent" class="bodyContent">
+<p>公众号每次调用接口时，可能获得正确或错误的返回码，开发者可以根据返回码信息调试接口，排查错误。</p>
+<p><strong>全局返回码说明如下：</strong></p>
+<table style="width: 640px;" border="1" cellspacing="0" cellpadding="4" align="center">
+<tbody>
+<tr><th>返回码</th><th>说明</th></tr>
+<tr>
+<td>-1</td>
+<td>系统繁忙</td>
+
+
+</tr>
+<tr>
+<td>0</td>
+<td>请求成功</td>
+
+
+</tr>
+<tr>
+<td>40001</td>
+<td>获取access_token时AppSecret错误，或者access_token无效</td>
+
+
+</tr>
+<tr>
+<td>40002</td>
+<td>不合法的凭证类型</td>
+
+
+</tr>
+<tr>
+<td>40003</td>
+<td>不合法的OpenID</td>
+
+
+</tr>
+<tr>
+<td>40004</td>
+<td>不合法的媒体文件类型</td>
+
+
+</tr>
+<tr>
+<td>40005</td>
+<td>不合法的文件类型</td>
+
+
+</tr>
+<tr>
+<td>40006</td>
+<td>不合法的文件大小</td>
+
+
+</tr>
+<tr>
+<td>40007</td>
+<td>不合法的媒体文件id</td>
+
+
+</tr>
+<tr>
+<td>40008</td>
+<td>不合法的消息类型</td>
+
+
+</tr>
+<tr>
+<td>40009</td>
+<td>不合法的图片文件大小</td>
+
+
+</tr>
+<tr>
+<td>40010</td>
+<td>不合法的语音文件大小</td>
+
+
+</tr>
+<tr>
+<td>40011</td>
+<td>不合法的视频文件大小</td>
+
+
+</tr>
+<tr>
+<td>40012</td>
+<td>不合法的缩略图文件大小</td>
+
+
+</tr>
+<tr>
+<td>40013</td>
+<td>不合法的APPID</td>
+
+
+</tr>
+<tr>
+<td>40014</td>
+<td>不合法的access_token</td>
+
+
+</tr>
+<tr>
+<td>40015</td>
+<td>不合法的菜单类型</td>
+
+
+</tr>
+<tr>
+<td>40016</td>
+<td>不合法的按钮个数</td>
+
+
+</tr>
+<tr>
+<td>40017</td>
+<td>不合法的按钮个数</td>
+
+
+</tr>
+<tr>
+<td>40018</td>
+<td>不合法的按钮名字长度</td>
+
+
+</tr>
+<tr>
+<td>40019</td>
+<td>不合法的按钮KEY长度</td>
+
+
+</tr>
+<tr>
+<td>40020</td>
+<td>不合法的按钮URL长度</td>
+
+
+</tr>
+<tr>
+<td>40021</td>
+<td>不合法的菜单版本号</td>
+
+
+</tr>
+<tr>
+<td>40022</td>
+<td>不合法的子菜单级数</td>
+
+
+</tr>
+<tr>
+<td>40023</td>
+<td>不合法的子菜单按钮个数</td>
+
+
+</tr>
+<tr>
+<td>40024</td>
+<td>不合法的子菜单按钮类型</td>
+
+
+</tr>
+<tr>
+<td>40025</td>
+<td>不合法的子菜单按钮名字长度</td>
+
+
+</tr>
+<tr>
+<td>40026</td>
+<td>不合法的子菜单按钮KEY长度</td>
+
+
+</tr>
+<tr>
+<td>40027</td>
+<td>不合法的子菜单按钮URL长度</td>
+
+
+</tr>
+<tr>
+<td>40028</td>
+<td>不合法的自定义菜单使用用户</td>
+
+
+</tr>
+<tr>
+<td>40029</td>
+<td>不合法的oauth_code</td>
+
+
+</tr>
+<tr>
+<td>40030</td>
+<td>不合法的refresh_token</td>
+
+
+</tr>
+<tr>
+<td>40031</td>
+<td>不合法的openid列表</td>
+
+
+</tr>
+<tr>
+<td>40032</td>
+<td>不合法的openid列表长度</td>
+
+
+</tr>
+<tr>
+<td>40033</td>
+<td>不合法的请求字符，不能包含\uxxxx格式的字符</td>
+
+
+</tr>
+<tr>
+<td>40035</td>
+<td>不合法的参数</td>
+
+
+</tr>
+<tr>
+<td>40038</td>
+<td>不合法的请求格式</td>
+
+
+</tr>
+<tr>
+<td>40039</td>
+<td>不合法的URL长度</td>
+
+
+</tr>
+<tr>
+<td>40050</td>
+<td>不合法的分组id</td>
+
+
+</tr>
+<tr>
+<td>40051</td>
+<td>分组名字不合法</td>
+
+
+</tr>
+<tr>
+<td>41001</td>
+<td>缺少access_token参数</td>
+
+
+</tr>
+<tr>
+<td>41002</td>
+<td>缺少appid参数</td>
+
+
+</tr>
+<tr>
+<td>41003</td>
+<td>缺少refresh_token参数</td>
+
+
+</tr>
+<tr>
+<td>41004</td>
+<td>缺少secret参数</td>
+
+
+</tr>
+<tr>
+<td>41005</td>
+<td>缺少多媒体文件数据</td>
+
+
+</tr>
+<tr>
+<td>41006</td>
+<td>缺少media_id参数</td>
+
+
+</tr>
+<tr>
+<td>41007</td>
+<td>缺少子菜单数据</td>
+
+
+</tr>
+<tr>
+<td>41008</td>
+<td>缺少oauth code</td>
+
+
+</tr>
+<tr>
+<td>41009</td>
+<td>缺少openid</td>
+
+
+</tr>
+<tr>
+<td>42001</td>
+<td>access_token超时</td>
+
+
+</tr>
+<tr>
+<td>42002</td>
+<td>refresh_token超时</td>
+
+
+</tr>
+<tr>
+<td>42003</td>
+<td>oauth_code超时</td>
+
+
+</tr>
+<tr>
+<td>43001</td>
+<td>需要GET请求</td>
+
+
+</tr>
+<tr>
+<td>43002</td>
+<td>需要POST请求</td>
+
+
+</tr>
+<tr>
+<td>43003</td>
+<td>需要HTTPS请求</td>
+
+
+</tr>
+<tr>
+<td>43004</td>
+<td>需要接收者关注</td>
+
+
+</tr>
+<tr>
+<td>43005</td>
+<td>需要好友关系</td>
+
+
+</tr>
+<tr>
+<td>44001</td>
+<td>多媒体文件为空</td>
+
+
+</tr>
+<tr>
+<td>44002</td>
+<td>POST的数据包为空</td>
+
+
+</tr>
+<tr>
+<td>44003</td>
+<td>图文消息内容为空</td>
+
+
+</tr>
+<tr>
+<td>44004</td>
+<td>文本消息内容为空</td>
+
+
+</tr>
+<tr>
+<td>45001</td>
+<td>多媒体文件大小超过限制</td>
+
+
+</tr>
+<tr>
+<td>45002</td>
+<td>消息内容超过限制</td>
+
+
+</tr>
+<tr>
+<td>45003</td>
+<td>标题字段超过限制</td>
+
+
+</tr>
+<tr>
+<td>45004</td>
+<td>描述字段超过限制</td>
+
+
+</tr>
+<tr>
+<td>45005</td>
+<td>链接字段超过限制</td>
+
+
+</tr>
+<tr>
+<td>45006</td>
+<td>图片链接字段超过限制</td>
+
+
+</tr>
+<tr>
+<td>45007</td>
+<td>语音播放时间超过限制</td>
+
+
+</tr>
+<tr>
+<td>45008</td>
+<td>图文消息超过限制</td>
+
+
+</tr>
+<tr>
+<td>45009</td>
+<td>接口调用超过限制</td>
+
+
+</tr>
+<tr>
+<td>45010</td>
+<td>创建菜单个数超过限制</td>
+
+
+</tr>
+<tr>
+<td>45015</td>
+<td>回复时间超过限制</td>
+
+
+</tr>
+<tr>
+<td>45016</td>
+<td>系统分组，不允许修改</td>
+
+
+</tr>
+<tr>
+<td>45017</td>
+<td>分组名字过长</td>
+
+
+</tr>
+<tr>
+<td>45018</td>
+<td>分组数量超过上限</td>
+
+
+</tr>
+<tr>
+<td>46001</td>
+<td>不存在媒体数据</td>
+
+
+</tr>
+<tr>
+<td>46002</td>
+<td>不存在的菜单版本</td>
+
+
+</tr>
+<tr>
+<td>46003</td>
+<td>不存在的菜单数据</td>
+
+
+</tr>
+<tr>
+<td>46004</td>
+<td>不存在的用户</td>
+
+
+</tr>
+<tr>
+<td>47001</td>
+<td>解析JSON/XML内容错误</td>
+
+
+</tr>
+<tr>
+<td>48001</td>
+<td>api功能未授权</td>
+
+
+</tr>
+<tr>
+<td>50001</td>
+<td>用户未授权该api</td>
+
+
+</tr>
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+<p>&nbsp;</p>
+<div class="content_hd">
+<h2 id="firstHeading">附：接口频率限制说明</h2>
+
+
+</div>
+<div id="bodyContent" class="bodyContent">
+<p>公众号调用接口并不是无限制的。为了防止公众号的程序错误而引发微信服务器负载异常，默认情况下，每个公众号调用接口都不能超过一定限制，当超过一定限制时，调用对应接口会收到如下错误返回码：</p>
+<pre>{"errcode":45009,"errmsg":"api freq out of limit"}
+</pre>
+<p><strong>各接口调用频率限制如下：</strong></p>
+<table style="width: 640px;" border="1" cellspacing="0" cellpadding="4" align="center">
+<tbody>
+<tr><th>接口</th><th>每日限额</th></tr>
+<tr>
+<td>获取access_token</td>
+<td>2000</td>
+</tr>
+<tr>
+<td>自定义菜单创建</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>自定义菜单查询</td>
+<td>10000</td>
+</tr>
+<tr>
+<td>自定义菜单删除</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>创建分组</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>获取分组</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>修改分组名</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>移动用户分组</td>
+<td>100000</td>
+</tr>
+<tr>
+<td>上传多媒体文件</td>
+<td>5000</td>
+</tr>
+<tr>
+<td>下载多媒体文件</td>
+<td>10000</td>
+</tr>
+<tr>
+<td>发送客服消息</td>
+<td>500000</td>
+</tr>
+<tr>
+<td>获取带参数的二维码</td>
+<td>10000</td>
+</tr>
+<tr>
+<td>获取关注者列表</td>
+<td>500</td>
+</tr>
+<tr>
+<td>获取用户基本信息</td>
+<td>5000000</td>
+</tr>
+<tr>
+<td>获取网页授权access_token</td>
+<td>2000000</td>
+</tr>
+<tr>
+<td>刷新网页授权access_token</td>
+<td>2000000</td>
+</tr>
+<tr>
+<td>网页授权获取用户信息</td>
+<td>2000000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+		</div>
+	</div>
+</div>
+</div>
+
+<script type="text/javascript">
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+</script>
+</div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright ©2017 方倍工作室
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+<!--PageEndHtml Block Begin-->
+<div style="display:none;">
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F674430fbddd66a488580ec86aba288f7' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="js/h.js" type="text/javascript"></script><a href="http://tongji.baidu.com/hm-web/welcome/ico?s=674430fbddd66a488580ec86aba288f7" target="_blank"><img border="0" src="https://bs.baidu.com/hmt/icon/21.gif" width="20" height="20"></a>
+</div>
+
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","qzone","tsina","bdysc","weixin","renren","tqq","tieba","douban","sqq","ibaidu","mogujie","huaban","hx","fx","youdao","sdo","qingbiji","people","xinhua","copy"],"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"7","bdPos":"right","bdTop":"250"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+<!--PageEndHtml Block End-->
+
+
+</body></html>
