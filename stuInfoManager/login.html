@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>请登录</title>
+    <style>
+        fieldset{
+            width:300px;
+            margin:0 auto;
+        }
+    </style>
+</head>
+<body>
+    <fieldset>
+        <legend>请登录</legend>
+        <form action="#" method="get">
+            账号：<input type="text" name="userName" value='zy'> <br>
+            密码：<input type="password" name="password" value='666'> <br>
+            <input type="submit">
+        </form>
+    </fieldset>
+</body>
+    <script src="https://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+    <script>
+        $('form').submit(function(){
+            $.ajax({
+                type:"GET",
+                url:'login.php',
+                dataType:'JSON',
+                success:function(res){
+                    console.log(res);
+                    //console.log(JSON.parse(res));
+                    var usr = $.trim($('input[name=userName]').val());
+                    var pwd = $.trim($('input[name=password]').val());
+                    //console.log( res[0][0]);
+                    var i = 0;
+                    for(;i<res.length;i++){
+                        if(usr === res[i][1] && pwd === res[i][2]){
+							sessionStorage.setItem('usr',usr);
+                            location.href = 'index.html';
+                            break;
+                        }
+                    }
+                    if(i == res.length){
+                        alert('您输入的帐号或密码错误！请重新输入!');
+                    }
+                }
+            });
+            return false;
+        });
+    </script>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>淘宝商城</title>
+	<style>
+	nav{
+		width:1000px;
+		margin:0 auto;
+		position:relative;
+	}
+	.user{
+		position:absolute;
+		right:100px;
+	}
+			
+	</style>
+</head>
+<body>
+	<nav><span class="user"></span></nav>
+    这是我的首页……
+</body>
+<script src="https://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+<script>
+	$('.user').html(sessionStorage.getItem('usr') + ',欢迎您！');
+</script>
+</html>

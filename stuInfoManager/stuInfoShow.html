@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学生信息显示</title>
+    <style>
+        #stuInfo{
+            position: relative;
+        }
+       #pages{
+           position: absolute;
+           left: 350px;
+       }
+        #pages li{
+            width:20px;
+            text-align: center;
+            list-style-type: none;
+            float:left;
+            background-color: #999;
+            margin-right:5px;
+        }
+        #pages a{
+            text-decoration: none;
+            color: #fff;
+        }
+        .active{
+            background-color: #00f;
+            color:#fff;
+        }
+        #pages>li:first-child{
+            background-color: #00f;
+            color:#fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <table id="stuInfo" border="1" cellspacing="0" cellpadding="0" width="700" align="center">
+            <caption>学生信息表</caption>
+            <tr>
+                <th>学号</th>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>专业</th>
+                <th>出生年月</th>
+                <th>入校注册时间</th>
+                <th>系别</th>
+                <th>家庭住址</th>
+                <th>操作</th>
+            </tr>
+        </table>
+        <br><br><br>
+        <ul id="pages">
+            <!--<li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>-->
+        </ul>
+    </div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+<script>
+    //初始添加10行数据
+    $.ajax({
+        type: "GET",
+        url: 'stuInfo.php',
+        dataType: 'JSON',
+        success: function (res, status, xhr) {
+            //console.log(res);
+            for(var i=0;i<10;i++){
+                jQuery('#stuInfo').append(addEl(res,i));
+            }
+        }
+    });
+
+    //生成分页编号
+    $.ajax({
+        type: "GET",
+        url: 'stuInfo.php',
+        dataType: 'JSON',
+        success: function (res, status, xhr) {
+            console.log(res);
+            for(var i=0;i<Math.ceil(res.length/10);i++){
+                jQuery('#pages').append('<li><a href="#">' + (i+1) + '</a></li>');
+            }
+            //$('#pages>li:first-child').addClass('active');
+            //分页处理
+            $('#pages a').click(function(){
+                //console.log($(this).text());
+                $.ajax({
+                    type:"GET",
+                    url:'stuInfoPages.php',
+                    data:{
+                        page:$(this).text()
+                    },
+                    dataType:'JSON',
+                    success:function(res,status,xhr){
+                        $("#stuInfo tr:not(:first-child)").remove();
+                        for(var i=0;i<res.length;i++){
+                            jQuery('#stuInfo').append(addEl(res,i));
+                        }
+                    }
+                });
+                return false;
+            });
+        }
+    });
+
+
+
+    function addEl(res,i){
+        var str = '<tr><td>'+res[i][0]+'</td><td>'+res[i][1]+'</td><td>'+res[i][2]+'</td>';
+        str += '<td>'+res[i][3]+'</td><td>'+res[i][4]+'</td><td>'+res[i][5]+'</td>';
+        str += '<td>'+res[i][6]+'</td><td>'+res[i][7]+'</td><td><a href="#">修改</a>&nbsp;&nbsp;<a href="#">删除</a></td></tr>';
+        return str;
+    }
+</script>
+</html>
