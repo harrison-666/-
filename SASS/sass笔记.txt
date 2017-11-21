@@ -17,16 +17,6 @@ sass好处：
 （6）可以使用分支和循环结构；
 （7）可以定义函数。
 
-强制安装sass:
-gem install sass --force
-卸载:
-gem uninstall sass
-更新：
-gem update sass
-
-在linux中，参数分大小写。
-
-
 一、安装
 1、webStorm ruby
 2、进行扩展安装
@@ -35,6 +25,15 @@ gem update sass
 	sass -v(测试是否安装)
   (3)安装
      gem install sass
+     
+     强制安装sass:
+	gem install sass --force
+     卸载:
+	gem uninstall sass
+     更新：
+	gem update sass
+
+     在linux中，参数分大小写。
 	 
 3.配置webstorm 的file watchers
     配置:file->settings->tools->file watchers
@@ -53,12 +52,12 @@ gem update sass
    指令前要加@ 
 
 三、编译
-1、单文件编译
-sass style.scss style.css
-2、单文件监视修改(注意项目名和文件夹名不能出现汉字）
-sass --watch sytle.scss:style.css
-3、整个文件夹scss文件内容变化监视修改(注意项目名和文件夹名不能出现汉字）
-sass --watch scss:css
+   1、单文件编译
+	sass style.scss style.css
+   2、单文件监视修改(注意项目名和文件夹名不能出现汉字）
+	sass --watch sytle.scss:style.css
+   3、整个文件夹scss文件内容变化监视修改(注意项目名和文件夹名不能出现汉字）
+	sass --watch scss:css
 
 
 SASS提供四个编译风格的选项：
