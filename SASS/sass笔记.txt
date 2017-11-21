@@ -1,0 +1,87 @@
+﻿SASS（Less)
+sass css预编译
+
+css文件不能用变量，不能进行逻辑处理。
+
+两种扩展名:.scss .sass
+区别:sass的作用域没有大括号
+推荐使用SCSS
+
+
+sass好处：
+（1）允许使用变量；
+（2）允许嵌套；
+（3）可以实现继承；
+（4）不需要处理浏览器的兼容；
+（5）可以进行逻辑运算；
+（6）可以使用分支和循环结构；
+（7）可以定义函数。
+
+强制安装sass:
+gem install sass --force
+卸载:
+gem uninstall sass
+更新：
+gem update sass
+
+在linux中，参数分大小写。
+
+
+一、安装
+1、webStorm ruby
+2、进行扩展安装
+  (1)win+R或打开git命令窗口
+  (2)进入安装ruby的目录
+	sass -v(测试是否安装)
+  (3)安装
+     gem install sass
+	 
+3.配置webstorm 的file watchers
+    配置:file->settings->tools->file watchers
+	在第二个文本框中输入：
+	c:\ruby22\bin\scss.bat 单击ok
+二、sass css预编译
+(1)有两种扩展名:.sass .scss
+区别:sass的作用域没有大括号,推荐使用后者
+(2)对所有的变量前一定要加$
+
+   变量声明: $变量名
+   变量的使用:作为属性值可以直接使用
+   作为属性名使用的时候需要用#{$变量名}
+   经验:经常把字体,颜色抽出来作为变量.
+
+   指令前要加@ 
+
+三、编译
+1、单文件编译
+sass style.scss style.css
+2、单文件监视修改(注意项目名和文件夹名不能出现汉字）
+sass --watch sytle.scss:style.css
+3、整个文件夹scss文件内容变化监视修改(注意项目名和文件夹名不能出现汉字）
+sass --watch scss:css
+
+
+SASS提供四个编译风格的选项：
+　　* nested：嵌套缩进的css代码，它是默认值。
+　　* expanded：没有缩进的、扩展的css代码。
+　　* compact：简洁格式的css代码。
+　　* compressed：压缩后的css代码。
+生产环境当中，一般使用最后一个选项。
+　　sass --style compressed test.sass test.css
+你也可以让SASS监听某个文件或目录，一旦源文件有变动，就自动生成编译后的版本。
+　　// watch a file
+　　sass --watch input.scss:output.css
+　　// watch a directory
+　　sass --watch app/sass:public/stylesheets
+
+
+关于sass中不能中文注释问题解决方案：
+
+    在ruby的安装目录下搜索engine.rb文件，打开此文件，在最后一个require后加入如下一行文字：
+    Encoding.default_external = Encoding.find('utf-8')
+
+
+
+
+
+
