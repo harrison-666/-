@@ -1,0 +1,34 @@
+Linux:
+    多用户多任务，有图形、程序和命令界面
+    $:普通用户；
+    #:超级用户
+
+     ls:查看文件和目录；
+     cat:查看文件内容；
+     vi:编辑器
+     mkdir:创建目录
+
+     -h:查看参数/选项
+     node -h
+     node -v
+     node --version
+
+windows:单用户多任务，有图形和命令界面
+    dir /w/p  :以宽行分屏方式显示文件和目录
+    md:创建目录
+    rd:删除空目录
+    copy:复制文件
+
+
+    js文件不能单独运行，如果要运行，需要用node启动(这里的node是一个引擎）
+
+
+    npm init:生成配置文件(package.json);
+
+    npm install:下载依赖包
+
+
+    update sc set score = 100 where sno in (
+    	select sno from student where sname = '习近平');
+
+
