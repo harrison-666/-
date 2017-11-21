@@ -1,0 +1,7 @@
+﻿方法：
+1、在“操作”->”表选项”->”整理”这个下拉框中中将所有列中”latin1_swedish_ci”改成”utf8_general_ci“。删除以前的数据，重新向表中插入数据，不显示乱码了。
+
+2、在创建表的时候应该先添加字段的编码，在字段类型后面添加”CHARACTER SET utf8 COLLATE utf8_general_ci“
+
+
+如  ：create table  ddl中定义： department Add        varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci,

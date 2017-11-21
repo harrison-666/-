@@ -1,0 +1,50 @@
+1、函数依赖
+     概念：如果有一个关系r(x,y,z,m,n),其中假设x可以决定y，
+ 叫作x决定y,或y依赖于x,记作x->y,这种关系叫做函数依赖。
+    （1）部分函数依赖：如果存在x->y,其中x`->y，这叫做部分函数依赖。
+    （2）完全函数依赖：sc(sno,cno,grade,sname) (sno,cno)->grade
+    （3）传递函数依赖：如果有x->y,且y不决定x,又有y->z,最终可以得出x->z,这叫做传递函数依赖。
+
+
+2、范式：
+    （1）1NF：满足是一个关系表（行和列是原子的，不可分割的；行和列不能重复，位置无关）
+                但是可能存在部分函数依赖，反过来说，凡是存在部分函数依赖的关系一定是1NF;
+                可能存在数据冗余、删除和插入异常，是不规范的关系表。
+                解决方案：要做无损分解。
+                sc(sno,cno,sname,grade)   ->1NF
+                (sno,cno)->sname
+                (sno,cno)->grade
+
+                分解：
+                student(sno,sname)
+                sc(sno,cno,grade)
+
+
+                结合（拼合）：
+                //以下结果不能保存
+                select s.sno,sname,cno,grade
+                from student s,sc
+                where s.sno=sc.sno
+
+                //利用视图实现对结果的保存
+                create view v_sc as (
+                     select s.sno,sname,cno,grade
+                     from student s,sc
+                     where s.sno=sc.sno)
+    2NF:如果存在非主属性对主属性的传递函数依赖，则一定是2NF. 可能存在数据冗余、删除和插入异常，是不规范的关系表。
+        eg:
+            stu(sno,sname,sex,dno,department,daddr)  2NF
+                PK:sno
+                sno->sname
+                sno->sex
+                sno->dno
+                dno->deparment
+                dno->daddr
+
+        分解：
+            student(sno,sname,sex,dno)  PK:sno,FK:dno
+            dep(dno,department,daddr)
+    BCNF：不存在非主属性对主属性的部分函数依赖或传递函数依赖，叫BCNF。
+
+
+    注：分解的最终是将让关系中只存在完全函数依赖。

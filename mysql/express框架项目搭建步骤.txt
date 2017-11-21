@@ -1,0 +1,13 @@
+﻿express框架项目搭建步骤:
+0.下载并安装node.js(32bit/64bit)
+1.npm init
+2.npm install express --save
+3.npm install express-generator -g (安装express生成器，用于生成项目）
+4.express 项目名
+5.cd 项目名
+6.npm install（cd 项目名 && npm install）
+7.npm install mysql --save    （https://github.com/mysqljs/mysql）
+8.set DEBUG=项目名 & npm start(windows平台启动方式)
+  DEBUG=项目名:* npm start(MacOS/Linux平台启动方式)
+9.在浏览器地址栏中输入127.0.0.1:3000
+10.写JS代码

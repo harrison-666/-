@@ -1,0 +1,25 @@
+﻿ Node+Express的跨域访问控制问题：Access-Control-Allow-Origin
+
+报错如下： 
+XMLHttpRequest cannot load http://127.0.0.1:3000/news/latest. No ‘Access-Control-Allow-Origin’ header is present on the requested resource. Origin ‘http://localhost:8080’ is therefore not allowed access.
+
+方案：解决代码如下：
+
+var express = require('express');
+var app = express();
+//设置跨域访问
+app.all('*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header("X-Powered-By",' 3.2.1')
+    res.header("Content-Type", "application/json;charset=utf-8");
+    next();
+});
+
+
+
+
+其他： 
+Access-Control-Allow-Origin 
+浏览器的确发出了请求，只有当目标页面的response中，包含了 Access-Control-Allow-Origin 这个header，并且它的值里有我们自己的域名时，浏览器才允许我们拿到它页面的数据进行下一步处理。

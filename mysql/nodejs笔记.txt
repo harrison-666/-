@@ -1,0 +1,126 @@
+﻿1、Node.js简介
+    Node.js是一个基于Chrome V8引擎的JavaScript运行环境。Node.js使用了一个事件驱动、非阻塞式I/O的模型，使其轻量又高效。Node.js的包管理器npm，是全球最大的开源库生态系统。
+    通俗地讲，Node.js是一个没运行界面的运行环境，把view去掉，只剩逻辑层。把引擎的本地文件操作放开，它就是一个Node.js环境。
+    服务器上如果有Bug，因为服务器上没有编译器，必须停掉服务器去修复Bug，意味着业务就不能持续运营了，会影响企业运营。
+
+2、Node.js API文档
+    http://nodejs.cn/api/http.html
+    http://nodejs.cn/api/
+    
+    (1)安装node.js
+    (2)写js代码
+    (3)在cmd窗口中进入js代码所在的目录
+    (4)启动:node js文件名
+
+3、express 基于Node.js的web开发框架，用来做服务器开发的后端框架。
+    http://www.expressjs.com.cn/starter/installing.html
+    http://www.expressjs.com.cn/4x/api.html 
+   
+遇到的坑：
+    安装npm install express --save遇到如下错误：
+    Refusing to install express as a dependency of itselt.
+
+解决方案：
+    把package.json中的name值加上test。
+
+4、安装express-generator 
+    前面只是express小项目，这里是生成express项目
+    npm install express-generator -g
+
+5、新建express应用   
+    express -h(查看参数)
+    express myproj(mypro为项目名称) 
+    
+    扩展名为.jade的文件是引擎文件
+    创建路由后,再将路由文件引入到app.js文件中:
+	(1)var json= require('./routes/json');
+	(2)app.use('/json', json);
+
+    说明：app.js为程序主文件,是整个工程的主架构，是项目的核心，主要写一些公共的功能。把之前的库都引进来了。把基本路由也设置好了。
+    views中放的是模板引擎。
+
+    myapp项目的机构如下： 
+    （1）package.json 这个可以说是模块管理包，项目信息和模块的版本号，其实你会发现在项目模块初始化的时候就是由这里的配置去查找生成的。 
+    （2）app.js 是项目的启动文件，可以说是项目的核心。主要写一些公共的功能。 
+    （3）bin 文件下有个无后缀的www文件，这是项目的入口文件，配置web服务端口和一些监听事件。 
+    （4）node_modules是项目的依赖的的文件模块，之后导入的包也会被放在其中，比如连接数据库的mongoose模块，后面会详细讲。     
+    （5）public 是项目的静态资源文件集，很容易看出图片、css文件、js文件都放在这里。 
+    （6）routes 是项目的路由模块，其中已经默认了index.js和user.js文件。在这里其实也包括一般后台语言中的控制器内容，当然在大的项目上是可以分离开来的。 
+    （7）views是项目的模版文件，是jade模版引擎，这个模版很简洁，但是坑也比较多，比如对空格的要求都非常严格，多一个少一个空格都会报错的，曾经踩过很多坑，其实它的性能也不是很高还不如用ejs呢。
+6、启动应用
+    cd myapp(切换目录)
+    set DEBUG=myapp & npm start
+
+    会出现坑：
+	Not find modules 'express'
+    解决方案：
+	在当前目录中执行：npm install
+
+7、mysql操作数据库
+    https://github.com/mysqljs/mysql
+
+    安装：
+	npm install mysql --save
+
+8、安装xampp和mysql软件并启动xampp控制器
+    XAMPP（Apache+MySQL+PHP+PERL）是一个把构建PHP项目所需软件打包在一起的一个软件。
+    如果控制台启动不了mysql,可以先单击右侧的services停止mysql,再从控制台启动它.
+
+9、创建数据库、数据表和输入相关数据
+   数据库操作步骤:
+   (1)创建数据库
+   (2)打开数据库
+   (3)创建表
+   (4)输入数据
+   (5)对数据表中的数据进行操作(增删改查)
+    增:insert into 表名(列名表) values(值表);
+    删:delete from 表名/视图 where 条件
+    改:update 表名/视图 set 列名1=表达式1,列名2=表达式2... where 条件
+    查:select */列名表[as 别名] from 表名 where 条件
+       group by 列名 having 分组条件 order by 列名[asc|desc]  
+    eg:
+    create database mydb;
+
+    use mydb;
+
+    create table users(id int primary key,name varchar(10),password varchar(10));
+
+    select * from users;
+
+    insert into users values(100,'harrison','111');
+
+    insert into users values(101,'admin','123');
+
+    insert into users values(102,'Gary','111');
+
+
+参考的网站有:
+    (1)node.js:
+	https://nodejs.org/en/download/
+	https://nodejs.org/api/http.html
+	http://nodejs.cn/api/
+	
+    (2)mysql:
+	https://dev.mysql.com/doc/refman/5.7/en/date-and-time-functions.html
+	https://github.com/mysqljs/mysql
+    (3)express:
+	http://www.expressjs.com.cn/starter/installing.html
+	http://www.expressjs.com.cn/4x/api.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

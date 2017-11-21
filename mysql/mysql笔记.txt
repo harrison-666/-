@@ -1,0 +1,5 @@
+1、从phpstudy的安装路径www目录复制phpMyAdmin目录到您的项目目录中，重设php启动路径；
+2、登录mysql
+    启动php服务，然后在网页的地址栏中输入：http://localhost/phpmyadmin/
+    初始帐号：root
+    初始密码：root
