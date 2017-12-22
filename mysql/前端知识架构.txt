@@ -1,0 +1,66 @@
+要掌握的框架:
+(1)UI
+Bootstrap	http://v3.bootcss.com/
+amaze UI	http://amazeui.org/
+Foundation	http://www.foundcss.com/
+jQuery EasyUI
+(2)js库
+jquery
+zepto.js	http://www.css88.com/doc/zeptojs_api/#animate
+velocity.js	http://www.mrfront.com/docs/velocity.js/index.html
+lodash.js	http://lodashjs.com/docs/	https://lodash.com/docs/
+underscore.js	http://www.css88.com/doc/underscore/
+(3)框架
+angular.js	http://www.angularjsapi.cn/#/ngChange
+vue.js		https://vuefe.cn/v2/guide/
+react.js	https://react.bootcss.com/react/docs/hello-world.html
+backbone.js(MVC)
+ionic	http://www.ionic.wang/js_doc-index-id-22.html
+(4)模块开发
+CMD
+requireJS	http://www.requirejs.cn/
+commonJS	http://javascript.ruanyifeng.com/nodejs/module.html
+seaJS		http://yslove.net/seajs/
+(5)前端工程化
+grunt		http://www.gruntjs.net/getting-started
+gulp		http://www.gulpjs.com.cn/
+webpack		http://www.css88.com/doc/webpack2/guides/development/
+(6)插件
+cordova		http://cordova.axuer.com/docs/zh-cn/latest/
+Font Awesome	http://fontawesome.io/
+阿里巴巴图标库   http://www.iconfont.cn/collections?personal=1
+animate.css	https://daneden.github.io/animate.css/
+wow.js		http://mynameismatthieu.com/WOW/
+chart.js	http://www.chartjs.org/
+swiper		http://www.swiper.com.cn/
+滚动条		https://github.com/cubiq/iscroll
+(7)css
+sass		http://www.css88.com/doc/sass/
+less
+(8)js
+es6		http://es6.ruanyifeng.com/#README
+(9)数据操作
+json		http://www.w3school.com.cn/json/
+mongoDB
+mysql
+(10)后台
+node.js		http://nodejs.cn/api/
+express.js
+npm		https://www.npmjs.com/enterprise
+bower		https://bower.io/
+php
+(11)微信
+微信公众平台	https://mp.weixin.qq.com/
+微信小程序	https://mp.weixin.qq.com/debug/wxadoc/dev/?t=1474644083132
+新浪云		https://api.weibo.com/oauth2/authorize?client_id=2354958370&redirect_uri=http%3A%2F%2Fwww.sinacloud.com%2Fsso%2Fweibo_callback.html%3Fsccb%3Dhttp%253A%252F%252Fsae.sina.com.cn%252F%253Fm%253Duser%2526a%253Dreg_check_login&response_type=code&forcelogin=true
+(12)资源库
+懒人图库		http://www.lanrentuku.com/
+开气预报		http://www.tianqi.com/dingzhi/
+百度地图		http://lbsyun.baidu.com/
+千图网		http://www.58pic.com/
+懒人之家		http://www.lanrenzhijia.com/
+网页模板		http://www.cssmoban.com/
+手机APP模板	http://www.17sucai.com/pins/tag/3039.html
+(13)混合开发
+apicloud
+weX5
