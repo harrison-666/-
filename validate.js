@@ -3,7 +3,7 @@
  * Locale: ZH (Chinese, 中文 (Zhōngwén), 汉语, 漢語)
  */
 $.extend($.validator.messages, {
-    required: "必须填写，哈哈哈",
+    required: "必须填写^^^^^",
     remote: "请修正此栏位",
     email: "请输入有效的电子邮件，也！",
     url: "请输入有效的网址",
