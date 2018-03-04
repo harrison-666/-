@@ -107,3 +107,11 @@ hr {
 input, select {
     vertical-align:middle;
 }
+
+.fl{
+    float: left;
+}
+
+.fr{
+    float: right;
+}
