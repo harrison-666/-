@@ -14,6 +14,9 @@
         mongoDB <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
         mysql <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
         node.js <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        sea.js
+        require.js
+        common.js        
         ES6 <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
         Webpack <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
         Gulp <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
